@@ -1,20 +1,46 @@
 let router = require('express').Router()
+let db = require('../models')
+
 
 router.get('/', (req, res) => {
-    res.render('shops/index')
+    db.shop.findAll()
+    .then(shops => {
+        res.render('shops/index', { shops })
+    })
+    .catch(err => {
+        console.log('Error', err)
+    res.send('Error')
+    })
 })
 
 router.post('/', (req, res) => {
-    console.log(req.body)
-    res.send('Make new shop route')
+    db.shop.create(req.body)
+    .then(newShop => {
+        res.redirect('/shops')
+    })
+    .catch(err => {
+        console.log('Error', err)
+        res.send('Error')
+    })
 })
 
 router.get('/new', (req, res) => {
     res.render('shops/new')
 })
 
-router.post('/:id', (req, res) => {
-    res.render('shops/show')
+router.get('/:id', (req, res) => {
+    db.shop.findOne({
+        where: { id: req.params.id },
+        include: [db.donut]
+    })
+    .then(shop => {
+        res.render('shops/show', { shop })
+    })
+    .catch(err => {
+        console.log('Error', err)
+        res.send('Error')
+    })
+    
 })
 
 module.exports = router

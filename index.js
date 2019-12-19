@@ -8,18 +8,8 @@ app.set('view engine', 'ejs')
 app.use(layouts)
 app.use(express.urlencoded({ extended: false}))
 
+app.use('/donuts', require('./controllers/donuts'))
 app.use('/shops', require('./controllers/shops'))
-
-app.post('/donuts', (req, res) => {
-    db.donut.create(req.body)
-    .then(donut => {
-        res.redirect('/shop' + req.body.shopId)
-    })
-    .catch(err => {
-        console.log(err)
-        res.send('Error')
-    })
-})
 
 app.get('/', (req, res) => {
     res.render('home')

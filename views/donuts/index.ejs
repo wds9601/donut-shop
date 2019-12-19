@@ -1,0 +1,19 @@
+<h1>All available donuts</h1>
+
+<div class="row">
+    <% donuts.forEach(d => { %>
+        <div class="col s4">
+            <div class="card small">
+                <div class="card-image">
+                    <img class="responsive-img" src="<%= d.image %>" alt="donut">
+                    <span class="card-title"><%= d.name %></span>
+                </div>
+                <div class="card-content"></div>
+                    <p>We would describe the dougnut as: <%= d.description %></p>
+                <div class="card-action">
+                    <a href="/donuts/<%= d.id %>">See More</a>
+                </div>
+            </div>
+        </div>
+    <% }) %>
+</div>
